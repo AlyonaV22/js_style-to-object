@@ -6,22 +6,15 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-  const result = {};
+  return sourceString.split(';').reduce((style, declaration) => {
+    const [key, value] = declaration.trim().split(':');
 
-  const splitString = sourceString.trim().split(';');
-
-  splitString.forEach((item) => {
-    const splitItem = item.trim().split(':');
-
-    if (splitItem.length === 2) {
-      const key = splitItem[0].trim();
-      const value = splitItem[1].trim();
-
-      result[key] = value;
+    if (key && value) {
+      style[key.trim()] = value.trim();
     }
-  });
 
-  return result;
+    return style;
+  }, {});
 }
 
 module.exports = convertToObject;
